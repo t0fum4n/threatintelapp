@@ -1,13 +1,20 @@
-# RSS Feed Viewer and ClickUp Integration
+# Threat Intel Feed App
+## RSS Feed Viewer and ClickUp Integration
 
 ## Project Description
 This Flask application fetches articles from a specified RSS feed (The Hacker's News), displays them, and allows users to get a summary of the articles. Additionally, it features integration with ClickUp, allowing users to create tasks from these articles directly. This is particularly useful for teams looking to monitor and react to new updates or information seamlessly integrated into their project management workflow.
 
 ## Features
-- Fetch articles from The Hacker's News RSS feed.
+- Fetch articles from The Hacker News RSS feed.
 - Display article titles in a scrollable list.
 - Show article descriptions and provide a detailed summary using the Ollama LLM service.
 - Create tasks in ClickUp based on article content with added mitigation and remediation steps via Ollama LLM.
+
+## Future State
+- GUI enhancements
+- Chatbot to chat with about articles
+- More threat feeds
+- More ...
 
 ## Installation
 
