@@ -33,7 +33,7 @@ def create_clickup_task():
 def llama_mitigation():
     content = request.json['description']
     try:
-        response = ollama.chat(model='llama3', messages=[{'role': 'user', 'content': "Provide an overview and mitigation steps for: " + content}])
+        response = ollama.chat(model='phi3:3.8b-mini-instruct-4k-fp16', messages=[{'role': 'user', 'content': "Provide an overview and mitigation steps for: " + content}])
         return jsonify({'mitigation': response['message']['content']})
     except ollama.ResponseError as e:
         return jsonify({'error': str(e)}), 500
@@ -70,7 +70,7 @@ def llama_response():
         #print("Sending to LLM:", prompt)  # Log the content being sent to the LLM
 
         # Send the prompt and the text to the LLM
-        llm_response = ollama.chat(model='llama3', messages=[{'role': 'user', 'content': prompt}])
+        llm_response = ollama.chat(model='phi3:3.8b-mini-instruct-4k-fp16', messages=[{'role': 'user', 'content': prompt}])
         return jsonify({'llama_response': llm_response['message']['content']})
     except ollama.ResponseError as e:
         return jsonify({'llama_response': f"Error getting response: {e}"}), 500
