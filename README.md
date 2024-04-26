@@ -15,7 +15,14 @@ This Flask application fetches articles from a specified RSS feed (The Hacker's 
 - Chatbot to chat with about articles
 - More threat feeds
 - More ...
-
+## Screenshots
+### Main Dashbaord
+![Feature 1](screenshots/main_dash.png "Maindash")
+### Dashboard filtered to "Windows" with a summary from Llama3
+![Feature 2](screenshots/filtered_windows_with_summary.png "Maindash with Windows filter and summary")
+### ClickUp Tasks with summary and mitigation steps
+![Feature 3](screenshots/clickup_task_1.png "ClickUp Task 1")
+![Feature 4](screenshots/clickup_task_2.png "ClickUp Task 2")
 ## Installation
 
 ### Prerequisites
