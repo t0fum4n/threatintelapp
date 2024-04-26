@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Feed Viewer</title>
+    <style>
+        body, html { height: 100%; margin: 0; padding: 0; }
+        #articles { width: 30%; float: left; height: 100%; overflow-y: auto; padding: 20px; box-sizing: border-box; }
+        #content { width: 70%; height: 100%; float: right; padding: 20px; position: fixed; top: 0; right: 0; overflow-y: auto; box-sizing: border-box; }
+        .article { cursor: pointer; padding: 10px; border-bottom: 1px solid #ccc; }
+        #responseButton { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="articles">
+        {% for article in articles %}
+        <div class="article" onclick='showContent({{ loop.index0 }}, {{ article.description|tojson }})'>
+            {{ article.title }}
+        </div>
+        {% endfor %}
+    </div>
+    <div id="content">
+        <p>Select an article to see the description and link.</p>
+    </div>
+
+    <script>
+    const articles = {{ articles|tojson|safe }};
+    const summaries = {};  // Object to store summaries indexed by article index
+
+    function showContent(index) {
+        const article = articles[index];
+        document.getElementById('content').innerHTML =
+            `<p>${article.description}</p>
+             <a href="${article.link}" target="_blank">Read more</a>
+             <button id="responseButton" onclick="fetchLlamaResponse(${index}, '${article.link}')">Get Article Summary</button>
+             <div id="llamaResponse">${summaries[index] || ''}</div>`;  // Display the cached summary if it exists
+    }
+
+    function fetchLlamaResponse(index, articleLink) {
+        if (summaries[index]) {
+            // If summary is already cached, use it
+            document.getElementById('llamaResponse').innerHTML = `<p><strong>Article Summary:</strong> ${summaries[index]}</p>`;
+            return;  // Exit the function if summary is already fetched
+        }
+        console.log("Requesting summary for:", articleLink);
+        fetch('/llama_response', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({url: articleLink})
+        })
+        .then(response => response.json())
+        .then(data => {
+            summaries[index] = data.llama_response;  // Cache the summary
+            document.getElementById('llamaResponse').innerHTML = `<p><strong>Article Summary:</strong> ${data.llama_response}</p>`;
+        })
+        .catch(error => console.error('Error fetching LLM response:', error));
+    }
+</script>
+
+</body>
+</html>

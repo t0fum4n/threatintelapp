@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Feed Viewer</title>
+    <style>
+        body, html { height: 100%; margin: 0; padding: 0; }
+        #articles {
+            width: 30%;
+            height: 100%; /* Full height */
+            overflow-y: auto; /* Enable vertical scroll */
+            float: left;
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in the width */
+        }
+        #content {
+            width: 70%;
+            height: 100%; /* Full height */
+            float: right;
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in the width */
+            position: fixed; /* Fixed position */
+            top: 0; /* Align top */
+            right: 0; /* Align right */
+            overflow-y: auto; /* Enable vertical scroll if content is long */
+        }
+        .article {
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="articles">
+        {% for article in articles %}
+        <div class="article" onclick="showContent({{ loop.index0 }})">
+            {{ article.title }}
+        </div>
+        {% endfor %}
+    </div>
+    <div id="content">
+        <p>Select an article to see the description and link.</p>
+    </div>
+
+    <script>
+        const articles = {{ articles|tojson|safe }};
+
+        function showContent(index) {
+            const article = articles[index];
+            document.getElementById('content').innerHTML =
+                `<p>${article.description}</p><a href="${article.link}" target="_blank">Read more</a>`;
+        }
+    </script>
+</body>
+</html>
