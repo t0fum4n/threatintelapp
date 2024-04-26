@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import feedparser, requests
+import feedparser
 from bs4 import BeautifulSoup
 import ollama
 import requests
