@@ -8,9 +8,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    keyword = request.args.get('keyword', '').lower()
     feed_url = 'https://feeds.feedburner.com/TheHackersNews'
     feed = feedparser.parse(feed_url)
-    articles = [{'title': entry.title, 'description': entry.summary, 'link': entry.link} for entry in feed.entries]
+    articles = [
+        {'title': entry.title, 'description': entry.summary, 'link': entry.link}
+        for entry in feed.entries
+        if keyword in entry.title.lower() or keyword in entry.summary.lower()
+    ]
     return render_template('index.html', articles=articles)
 
 
@@ -32,7 +37,7 @@ def llama_response():
         #print("Sending to LLM:", prompt)  # Log the content being sent to the LLM
 
         # Send the prompt and the text to the LLM
-        llm_response = ollama.chat(model='phi3', messages=[{'role': 'user', 'content': prompt}])
+        llm_response = ollama.chat(model='llama3', messages=[{'role': 'user', 'content': prompt}])
         return jsonify({'llama_response': llm_response['message']['content']})
     except ollama.ResponseError as e:
         return jsonify({'llama_response': f"Error getting response: {e}"}), 500
