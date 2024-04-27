@@ -2,7 +2,7 @@
 ## RSS Feed Viewer and ClickUp Integration
 
 ## Project Description
-This Flask application fetches articles from a specified RSS feed (The Hacker's News), displays them, and allows users to get a summary of the articles. Additionally, it features integration with ClickUp, allowing users to create tasks from these articles directly. This is particularly useful for teams looking to monitor and react to new updates or information seamlessly integrated into their project management workflow.
+This Flask application fetches articles from a specified RSS feed (The Hacker News), displays them, and allows users to get a summary of the articles. Additionally, it features integration with ClickUp, allowing users to create tasks from these articles directly. This is particularly useful for teams looking to monitor and react to new updates or information seamlessly integrated into their project management workflow.
 
 ## Features
 - Fetch articles from The Hacker News RSS feed.
